@@ -1,5 +1,6 @@
 ExternalProject_Add(
     glslang
+    DEPENDS spirv-tools
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/glslang
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${install_dir}

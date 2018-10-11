@@ -1,6 +1,6 @@
 ExternalProject_Add(
     vulkan-validationlayers
-    DEPENDS glslang vulkan-headers
+    DEPENDS glslang vulkan-headers spirv-tools
     SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Vulkan-ValidationLayers
     CMAKE_ARGS
         -DCMAKE_INSTALL_PREFIX=${install_dir}
