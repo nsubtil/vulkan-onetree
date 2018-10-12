@@ -1,14 +1,17 @@
 project(vulkan-sdk)
 cmake_minimum_required(VERSION 3.11)
-include(ExternalProject)
+enable_testing()
 
-find_package(PythonInterp REQUIRED)
+# build options for SPIRV-Tools
+#set(SPIRV-Headers_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers CACHE STRING "")
+set(SKIP_SPIRV_TOOLS_INSTALL OFF CACHE STRING "")
+set(SPIRV_SKIP_TESTS OFF CACHE STRING "")
 
-set(install_dir ${CMAKE_CURRENT_BINARY_DIR}/install)
+add_subdirectory(external)
 
-include(vulkan-headers.cmake)
-include(spirv-tools.cmake)
-include(glslang.cmake)
-include(vulkan-validationlayers.cmake)
-include(spirv-cross.cmake)
-#include(vulkan-loader.cmake)
+add_subdirectory(Vulkan-Headers)
+add_subdirectory(SPIRV-Headers)
+add_subdirectory(SPIRV-Tools)
+add_subdirectory(glslang)
+add_subdirectory(SPIRV-Cross)
+
