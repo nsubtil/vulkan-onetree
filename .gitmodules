@@ -9,7 +9,7 @@
 	url = https://github.com/KhronosGroup/glslang
 [submodule "SPIRV-Tools"]
 	path = SPIRV-Tools
-	url = https://github.com/nsubtil/SPIRV-Tools
+	url = https://github.com/KhronosGroup/SPIRV-Tools
 [submodule "SPIRV-Headers"]
 	path = SPIRV-Headers
 	url = https://github.com/KhronosGroup/SPIRV-Headers
