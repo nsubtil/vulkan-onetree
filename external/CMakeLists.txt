@@ -2,14 +2,15 @@
 # we may want to move this back into separate .cmake files that live in SPIRV-Tools instead
 # so that we don't have to maintain the setup script in two places
 
-# set up googlemock
-set(GMOCK_DIR ${CMAKE_CURRENT_SOURCE_DIR}/googletest/googlemock)
+# set up googletest + googlemock
 if(WIN32)
     option(gtest_force_shared_crt
            "Use shared (DLL) run-time lib even when Google Test is built as static lib."
            ON)
 endif()
-add_subdirectory(${GMOCK_DIR} EXCLUDE_FROM_ALL)
+
+set(GTEST_IS_STATIC_LIB TRUE CACHE STRING "googletest is built as a static library")
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/googletest EXCLUDE_FROM_ALL)
 if(MSVC)
     # Our tests use ::testing::Combine.  Work around a compiler
     # detection problem in googletest, where that template is
