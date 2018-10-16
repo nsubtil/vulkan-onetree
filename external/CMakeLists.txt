@@ -19,7 +19,7 @@ if(MSVC)
     target_compile_definitions(gmock PUBLIC -DGTEST_HAS_COMBINE=1)
 endif()
 foreach(target gtest gtest_main gmock gmock_main)
-    set_property(TARGET ${target} PROPERTY FOLDER GoogleTest)
+    set_property(TARGET ${target} PROPERTY FOLDER "external/GoogleTest")
 endforeach()
 
 # set up re2
@@ -28,6 +28,7 @@ set(RE2_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/re2" CACHE STRING "RE2 
 add_subdirectory(re2)
 # turn off warnings for re2
 set_property(TARGET re2 APPEND PROPERTY COMPILE_OPTIONS -w)
+set_property(TARGET re2 PROPERTY FOLDER "external/re2")
 
 # set up effcee
 # SPIRV-Tools uses the shared CRT with MSVC. Tell Effcee to do the same
@@ -38,4 +39,4 @@ add_subdirectory(effcee)
 set_property(TARGET effcee PROPERTY FOLDER Effcee)
 # turn off warnings for effcee
 set_property(TARGET effcee APPEND PROPERTY COMPILE_OPTIONS -w)
-set_property(TARGET effcee PROPERTY FOLDER Effcee)
+set_property(TARGET effcee PROPERTY FOLDER "external/Effcee")

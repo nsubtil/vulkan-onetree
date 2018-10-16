@@ -1,6 +1,7 @@
 project(vulkan-sdk)
 cmake_minimum_required(VERSION 3.11)
 enable_testing()
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # build options for SPIRV-Tools
 #set(SPIRV-Headers_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers CACHE STRING "")
@@ -14,4 +15,5 @@ add_subdirectory(SPIRV-Headers)
 add_subdirectory(SPIRV-Tools)
 add_subdirectory(glslang)
 add_subdirectory(Vulkan-ValidationLayers)
+add_subdirectory(Vulkan-Loader)
 add_subdirectory(SPIRV-Cross)
