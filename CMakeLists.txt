@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION 3.11)
 enable_testing()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# some projects seem to override this to debug, which causes issues unless it's set at the top level
+if (NOT CMAKE_BUILD_TYPE)
+    message("CMAKE_BUILD_TYPE not set, defaulting to Debug")
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
 # build options for SPIRV-Tools
 #set(SPIRV-Headers_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers CACHE STRING "")
 set(SKIP_SPIRV_TOOLS_INSTALL OFF CACHE STRING "")
