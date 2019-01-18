@@ -21,23 +21,23 @@ win64-debug-ninja:
     CMAKE_BUILD_TYPE: "Debug"
   script: *windows-build-script
 
-# win64-relwithdebinfo-ninja:
-#   stage: build
-#   tags:
-#     - windows
-#   variables:
-#     CMAKE_GENERATOR: "Ninja"
-#     CMAKE_BUILD_TYPE: "RelWithDebInfo"
-#   script: *windows-build-script
+win64-relwithdebinfo-ninja:
+  stage: build
+  tags:
+    - windows
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_BUILD_TYPE: "RelWithDebInfo"
+  script: *windows-build-script
 
-# win64-release-ninja:
-#   stage: build
-#   tags:
-#     - windows
-#   variables:
-#     CMAKE_GENERATOR: "Ninja"
-#     CMAKE_BUILD_TYPE: "Release"
-#   script: *windows-build-script
+win64-release-ninja:
+  stage: build
+  tags:
+    - windows
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_BUILD_TYPE: "Release"
+  script: *windows-build-script
 
 win64-debug-sln:
   stage: build
@@ -49,22 +49,22 @@ win64-debug-sln:
     EXTRA_BUILD_ARGS: "-- /m"
   script: *windows-build-script
 
-# win64-relwithdebinfo-sln:
-#   stage: build
-#   tags:
-#     - windows
-#   variables:
-#     CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
-#     CMAKE_BUILD_TYPE: "RelWithDebInfo"
-#     EXTRA_BUILD_ARGS: "-- /m"
-#   script: *windows-build-script
+win64-relwithdebinfo-sln:
+  stage: build
+  tags:
+    - windows
+  variables:
+    CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+    CMAKE_BUILD_TYPE: "RelWithDebInfo"
+    EXTRA_BUILD_ARGS: "-- /m"
+  script: *windows-build-script
 
-# win64-release-sln:
-#   stage: build
-#   tags:
-#     - windows
-#   variables:
-#     CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
-#     CMAKE_BUILD_TYPE: "Release"
-#     EXTRA_BUILD_ARGS: "-- /m"
-#   script: *windows-build-script
+win64-release-sln:
+  stage: build
+  tags:
+    - windows
+  variables:
+    CMAKE_GENERATOR: "Visual Studio 15 2017 Win64"
+    CMAKE_BUILD_TYPE: "Release"
+    EXTRA_BUILD_ARGS: "-- /m"
+  script: *windows-build-script
