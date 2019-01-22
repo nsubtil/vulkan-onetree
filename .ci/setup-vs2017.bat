@@ -7,4 +7,4 @@ for /f "usebackq tokens=1* delims=: " %%i in (`%CI_PROJECT_DIR%/.ci/vswhere.exe 
     if /i "%%i"=="installationPath" set VS2017DIR=%%j
 )
 
-call "%VS2017DIR%\Common7\Tools\VsDevCmd.bat" -arch=x64
+call "%VS2017DIR%\Common7\Tools\VsDevCmd.bat" -arch=%BUILD_ARCH%
