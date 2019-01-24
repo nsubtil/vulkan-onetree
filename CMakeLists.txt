@@ -14,6 +14,12 @@ endif()
 set(SKIP_SPIRV_TOOLS_INSTALL OFF CACHE STRING "")
 set(SPIRV_SKIP_TESTS OFF CACHE STRING "")
 
+# build options for shaderc
+set(SHADERC_ENABLE_SHARED_CRT ON CACHE STRING "")
+# xxxnsubtil: workaround for shaderc's usage of PYTHON_EXE
+find_package(PythonInterp REQUIRED)
+set(PYTHON_EXE ${PYTHON_EXECUTABLE} CACHE STRING "")
+
 add_subdirectory(external)
 
 add_subdirectory(Vulkan-Headers)
@@ -23,3 +29,4 @@ add_subdirectory(glslang)
 add_subdirectory(Vulkan-Loader)
 add_subdirectory(Vulkan-ValidationLayers)
 add_subdirectory(SPIRV-Cross)
+add_subdirectory(shaderc)

@@ -28,3 +28,6 @@
 [submodule "Vulkan-Loader"]
 	path = Vulkan-Loader
 	url = https://github.com/nsubtil/Vulkan-Loader
+[submodule "shaderc"]
+	path = shaderc
+	url = https://github.com/google/shaderc
