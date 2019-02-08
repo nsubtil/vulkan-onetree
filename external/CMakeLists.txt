@@ -12,7 +12,7 @@ endif()
 set(GTEST_IS_STATIC_LIB TRUE CACHE STRING "googletest is built as a static library")
 set(INSTALL_GTEST OFF CACHE STRING "")
 set(INSTALL_GMOCK OFF CACHE STRING "")
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/googletest EXCLUDE_FROM_ALL)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/googletest/googlemock EXCLUDE_FROM_ALL)
 if(MSVC)
     # Our tests use ::testing::Combine.  Work around a compiler
     # detection problem in googletest, where that template is
