@@ -11,5 +11,6 @@ cd build || exit /b 1
 
 @rem configure and run
 @echo on
+cmake --version
 cmake -G "%CMAKE_GENERATOR%" -DCMAKE_BUILD_TYPE="%CMAKE_BUILD_TYPE%" .. || exit / b 1
 cmake --build . %EXTRA_BUILD_ARGS% || exit /b 1
