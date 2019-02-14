@@ -1,5 +1,5 @@
 project(vulkan-sdk)
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.10.2)
 enable_testing()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
