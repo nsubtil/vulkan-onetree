@@ -1,6 +1,6 @@
 [submodule "Vulkan-Headers"]
 	path = Vulkan-Headers
-	url = https://github.com/nsubtil/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers
 [submodule "Vulkan-ValidationLayers"]
 	path = Vulkan-ValidationLayers
 	url = https://github.com/nsubtil/Vulkan-ValidationLayers
