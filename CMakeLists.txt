@@ -3,6 +3,12 @@ cmake_minimum_required(VERSION 3.10.2)
 enable_testing()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+if (CMAKE_VERSION VERSION_LESS "3.12")
+    # pull in FindPython3.cmake from 3.12
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindPython3)
+endif()
+message("${CMAKE_MODULE_PATH}")
+
 # some projects seem to override this to debug, which causes issues unless it's set at the top level
 if (NOT CMAKE_BUILD_TYPE)
     message("CMAKE_BUILD_TYPE not set, defaulting to Debug")
@@ -17,7 +23,8 @@ set(SPIRV_SKIP_TESTS OFF CACHE STRING "")
 # build options for shaderc
 set(SHADERC_ENABLE_SHARED_CRT ON CACHE STRING "")
 # xxxnsubtil: workaround for shaderc's usage of PYTHON_EXE
-find_package(PythonInterp REQUIRED)
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+set(PYTHON_EXECUTABLE ${Python3_EXECUTABLE} CACHE STRING "")
 set(PYTHON_EXE ${PYTHON_EXECUTABLE} CACHE STRING "")
 
 add_subdirectory(external)
