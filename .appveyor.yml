@@ -7,6 +7,7 @@ os:
 platform:
   - x64
   - x86
+  - Win32
 
 configuration:
   - Release
@@ -19,6 +20,14 @@ environment:
   matrix:
     - generator: Ninja
     - generator: SLN
+
+# xxxnsubtil: this is really ugly
+matrix:
+  exclude:
+    - generator: Ninja
+      platform: Win32
+    - generator: SLN
+      platform: x86
 
 install:
   - git submodule update --init --recursive
