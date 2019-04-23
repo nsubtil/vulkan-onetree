@@ -1,9 +1,34 @@
-# variables:
-#   GIT_STRATEGY: fetch
-#   GIT_SUBMODULE_STRATEGY: recursive
+variables:
+  GIT_STRATEGY: fetch
+  GIT_SUBMODULE_STRATEGY: none
 
-# stages:
-#   - build
+stages:
+  - build
+
+.sdk-build: &sdk-build
+  stage: build
+  image: ubuntu:18.04
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y -qq cmake git g++ build-essential ninja-build
+    - apt-get install -y libxkbcommon-dev libwayland-dev libmirclient-dev libxrandr-dev
+    - apt-get install -y libx11-xcb-dev libxcb-keysyms1 libxcb-keysyms1-dev libxcb-ewmh-dev
+    - apt-get install -y libxcb-randr0-dev
+    - apt-get install -y python3 python3-distutils
+    - git submodule sync
+    - git submodule update --init
+
+  script:
+    - mkdir build
+    - cd build
+    - cmake --version
+    - cmake -G Ninja --config $CMAKE_BUILD_TYPE ..
+    - cmake --build .
+
+sdk-build-debug:
+  variables:
+    CMAKE_BUILD_TYPE: Debug
+  <<: *sdk-build
 
 # .windows-build-script:
 #   script: &windows-build-script
