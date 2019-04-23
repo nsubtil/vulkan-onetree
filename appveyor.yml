@@ -2,10 +2,11 @@ version: "{build}"
 
 os:
   - Visual Studio 2017
+  - Visual Studio 2015
 
 platform:
   - x64
-  - Win32
+  - x86
 
 configuration:
   - Release
@@ -16,21 +17,41 @@ environment:
   PYTHON_PATH: "C:/Python35"
 
   matrix:
-    - CMAKE_GENERATOR: "Ninja"
-    - CMAKE_GENERATOR: "Visual Studio 15 2017"
-      EXTRA_BUILD_ARGS: "/m"
-    - CMAKE_GENERATOR: "Visual Studio 13 2015"
-      EXTRA_BUILD_ARGS: "/m"
+    - generator: Ninja
+    - generator: SLN
 
 install:
   - git submodule update --init --recursive
-
-before_build:
-  - cmake --version
   - mkdir build
   - cd build
-  - cmake -A %PLATFORM% --config %CONFIGURATION% -G %CMAKE_GENERATOR% .. 
 
-build_script:
-  - cd build
-  - cmake --build . -- %EXTRA_BUILD_ARGS%
+for:
+-
+  matrix:
+    only:
+      - generator: Ninja
+  
+  before_build:
+    - choco install ninja /y
+    - set CI_PROJECT_DIR=%APPVEYOR_BUILD_FOLDER%
+    - call ../.ci/setup-vs2017.bat
+    - cmake --version
+    - cl.exe
+    - cmake --config %configuration% -G %generator% ..
+
+  build_script:
+    - cmake --build .
+
+-
+  matrix:
+    only:
+      - generator: SLN
+  
+  before_build:
+    - cmake --version
+    - cmake -A %platform% --config %configuration% ..
+
+  build:
+    parallel: true
+    project: build/vulkan-sdk.sln
+    verbosity: quiet
