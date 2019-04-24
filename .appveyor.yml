@@ -6,7 +6,6 @@ os:
 
 platform:
   - x64
-  - x86
   - Win32
 
 configuration:
@@ -21,32 +20,39 @@ environment:
     - generator: Ninja
     - generator: SLN
 
-# xxxnsubtil: this is really ugly
-matrix:
-  exclude:
-    - generator: Ninja
-      platform: Win32
-    - generator: SLN
-      platform: x86
+before_build:
+  # translate platform into the "architecture" that SLN-based generators expect
+  - if "%platform%" == "Win32" ( set arch=x86 )
+  - if "%platform%" == "x64" ( set arch=x64 )
 
-install:
+  # set up environment variables for VS
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2015" ( call "%VS140COMNTOOLS%/../../vc/vcvarsall.bat" %arch% )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%" == "Visual Studio 2017" ( call .ci/setup-vs2017.bat )
+
+  # clone submodules
   - git submodule update --init --recursive
+
   - mkdir build
   - cd build
+
+  # log the version of cmake and cl
+  - cmake --version
+  - cl.exe
+
+  # create the build files
+  - if "%generator%" == "Ninja" ( set cmake_generator_args=-G Ninja --config %configuration% )
+  - if "%generator%" == "SLN" ( set cmake_generator_args=-A %platform% )
+  - echo %cmake_generator_args%
+  - cmake %cmake_generator_args% ..
 
 for:
 -
   matrix:
     only:
       - generator: Ninja
-  
-  before_build:
-    - choco install ninja /y
-    - set CI_PROJECT_DIR=%APPVEYOR_BUILD_FOLDER%
-    - call ../.ci/setup-vs2017.bat
-    - cmake --version
-    - cl.exe
-    - cmake --config %configuration% -G %generator% ..
+
+  install:
+    - choco install /y ninja
 
   build_script:
     - cmake --build .
@@ -55,10 +61,6 @@ for:
   matrix:
     only:
       - generator: SLN
-  
-  before_build:
-    - cmake --version
-    - cmake -A %platform% --config %configuration% ..
 
   build:
     parallel: true
@@ -70,4 +72,4 @@ test_script:
     # * glslang-testsuite (needs glslang inside shaderc to run)
     # * spirv-cross-* (failing)
     # * spirv-tools-copyrights (occasional failures on certain systems?)
-    - ctest -j12 -E "glslang-testsuite|spirv-cross-*|spirv-tools-copyrights"
+    - ctest -j12 -C %configuration% -E "glslang-testsuite|spirv-cross-*|spirv-tools-copyrights"
