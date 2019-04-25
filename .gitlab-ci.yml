@@ -5,8 +5,25 @@ variables:
 stages:
   - build
 
-.sdk-build: &sdk-build
-  stage: build
+# xxxnsubtil: Ubuntu 16 builds seem to require a different compiler version
+# .ubuntu-16: &ubuntu-16
+  # image: ubuntu:16.04
+  # before_script:
+    # - apt-get update -qq
+    # - apt-get install -y -qq git g++ build-essential ninja-build wget
+    # - apt-get install -y libxkbcommon-dev libwayland-dev libmirclient-dev libxrandr-dev
+    # - apt-get install -y libx11-xcb-dev libxcb-keysyms1 libxcb-keysyms1-dev libxcb-ewmh-dev
+    # - apt-get install -y libxcb-randr0-dev
+    # - apt-get install -y python3 python3-setuptools
+    # # pull cmake 3.14.3
+    # - mkdir /cmake
+    # - pushd /cmake
+    # - wget -nv https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3-Linux-x86_64.tar.gz
+    # - tar zxf cmake-3.14.3-Linux-x86_64.tar.gz
+    # - export PATH=/cmake/cmake-3.14.3-Linux-x86_64/bin:$PATH
+    # - popd
+
+.ubuntu-18: &ubuntu-18
   image: ubuntu:18.04
   before_script:
     - apt-get update -qq
@@ -15,10 +32,12 @@ stages:
     - apt-get install -y libx11-xcb-dev libxcb-keysyms1 libxcb-keysyms1-dev libxcb-ewmh-dev
     - apt-get install -y libxcb-randr0-dev
     - apt-get install -y python3 python3-distutils
+
+.sdk-build: &sdk-build
+  stage: build
+  script:
     - git submodule sync
     - git submodule update --init
-
-  script:
     - mkdir build
     - cd build
     - cmake --version
@@ -33,14 +52,23 @@ stages:
 ubuntu18-ninja-debug:
   variables:
     CMAKE_BUILD_TYPE: Debug
+  <<: *ubuntu-18
   <<: *sdk-build
 
 ubuntu18-ninja-relwithdebinfo:
   variables:
     CMAKE_BUILD_TYPE: RelWithDebInfo
+  <<: *ubuntu-18
   <<: *sdk-build
 
 ubuntu18-ninja-release:
   variables:
     CMAKE_BUILD_TYPE: Release
+  <<: *ubuntu-18
   <<: *sdk-build
+
+# ubuntu16-ninja-debug:
+#   variables:
+#     CMAKE_BUILD_TYPE: Debug
+#   <<: *ubuntu-16
+#   <<: *sdk-build
