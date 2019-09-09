@@ -3,7 +3,7 @@
 	url = https://github.com/KhronosGroup/Vulkan-Headers
 [submodule "Vulkan-ValidationLayers"]
 	path = Vulkan-ValidationLayers
-	url = https://github.com/nsubtil/Vulkan-ValidationLayers
+	url = https://github.com/KhronosGroup/Vulkan-ValidationLayers
 [submodule "glslang"]
 	path = glslang
 	url = https://github.com/KhronosGroup/glslang

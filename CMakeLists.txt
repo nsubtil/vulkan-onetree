@@ -15,6 +15,11 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
 endif()
 
+# this should only affect Vulkan-ValidationLayers and Vulkan-Loader
+# Loader requires the WDK, which we'd rather not pull in as a dependecy
+# VL requires the loader for tests
+set(BUILD_TESTS OFF CACHE STRING "")
+
 # build options for SPIRV-Tools
 #set(SPIRV-Headers_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SPIRV-Headers CACHE STRING "")
 set(SKIP_SPIRV_TOOLS_INSTALL OFF CACHE STRING "")
@@ -33,7 +38,8 @@ add_subdirectory(Vulkan-Headers)
 add_subdirectory(SPIRV-Headers)
 add_subdirectory(SPIRV-Tools)
 add_subdirectory(glslang)
-add_subdirectory(Vulkan-Loader)
+# xxxnsubtil: loader isn't built due to WDK dependency
+# add_subdirectory(Vulkan-Loader)
 add_subdirectory(Vulkan-ValidationLayers)
 add_subdirectory(SPIRV-Cross)
 add_subdirectory(shaderc)
