@@ -90,9 +90,10 @@ for:
     project: build/vulkan-sdk.sln
     verbosity: quiet
 
-test_script:
-    # explicitly excluded:
-    # * glslang-testsuite (needs glslang inside shaderc to run)
-    # * spirv-cross-* (failing)
-    # * spirv-tools-copyrights (occasional failures on certain systems?)
-    - ctest -j12 -C %configuration% -E "glslang-testsuite|spirv-cross-*|spirv-tools-copyrights"
+# test_script:
+#     # explicitly excluded:
+#     # * glslang-testsuite (needs glslang inside shaderc to run)
+#     # * spirv-cross-* (failing)
+#     # * spirv-tools-copyrights (occasional failures on certain systems?)
+#     - ctest -j12 -C %configuration% -E "glslang-testsuite|spirv-cross-*|spirv-tools-copyrights"
+
